@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             Dec5TeamProjectTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    PopularDestinationsScreen()
+                    ExchangeRateApp()
                 }
             }
         }
