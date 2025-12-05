@@ -1,23 +1,27 @@
 package com.example.dec5teamproject.DataLayer.Models
 
-import com.google.android.gms.maps.model.PlaceFeature
-
 data class GeoNameResponse(
     val lat: Double,
     val lon: Double
 )
+
+// List of features
 data class PlacesResponse(
     val features: List<PlaceFeature>
 )
+
+// Define PlaceFeature properly
 data class PlaceFeature(
     val properties: PlaceProperties
 )
 
+// Properties inside each feature
 data class PlaceProperties(
     val xid: String,
     val name: String?
 )
 
+// Detail of a place
 data class PlaceDetailResponse(
     val name: String?,
     val wikipedia_extracts: WikiExtracts?,
