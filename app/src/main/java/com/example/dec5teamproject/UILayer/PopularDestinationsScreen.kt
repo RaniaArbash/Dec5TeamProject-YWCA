@@ -8,6 +8,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 import com.example.dec5teamproject.model.Country
 import com.example.dec5teamproject.viewmodel.CountriesUiState
@@ -16,8 +17,7 @@ import com.example.dec5teamproject.viewmodel.CountriesViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PopularDestinationsScreen(
-    viewModel: CountriesViewModel,
-    onCountrySelected: (Country) -> Unit
+    viewModel: CountriesViewModel = viewModel()
 ) {
     val uiState by viewModel.state.collectAsState()
 
@@ -34,8 +34,7 @@ fun PopularDestinationsScreen(
                     onRetry = { viewModel.refresh() }
                 )
                 is CountriesUiState.Success -> CountriesGrid(
-                    countries = state.countries,
-                    onClick = onCountrySelected
+                    countries = state.countries
                 )
             }
         }
@@ -66,8 +65,7 @@ private fun ErrorState(message: String, onRetry: () -> Unit) {
 
 @Composable
 private fun CountriesGrid(
-    countries: List<Country>,
-    onClick: (Country) -> Unit
+    countries: List<Country>
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(minSize = 160.dp),
@@ -76,18 +74,16 @@ private fun CountriesGrid(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(countries, key = { it.name }) { country ->
-            CountryCard(country = country, onClick = { onClick(country) })
+            CountryCard(country = country)
         }
     }
 }
 
 @Composable
 private fun CountryCard(
-    country: Country,
-    onClick: () -> Unit
+    country: Country
 ) {
     Card(
-        onClick = onClick,
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(Modifier.padding(12.dp)) {
