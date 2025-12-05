@@ -29,10 +29,10 @@ class EventsViewModel : ViewModel() {
             val result = repository.getEvents(city, category, country)
             isLoading = false
 
-            if (result.isSuccess) {
-                events = result.getOrNull()?.embedded?.events ?: emptyList()
-            } else {
-                errorMessage = result.exceptionOrNull()?.message
+            result.onSuccess { response ->
+                events = response.embedded?.events ?: emptyList()
+            }.onFailure { e ->
+                errorMessage = e.message
             }
         }
     }

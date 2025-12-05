@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -9,8 +12,20 @@ android {
     compileSdk = 36
 
 
+    // Load local.properties manually
+    val localProperties = Properties()
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localProperties.load(FileInputStream(localPropertiesFile))
+    }
+
+    val tmApiKey = localProperties.getProperty("TM_API_KEY") ?: ""
+    //: String by project
+        //.findProperty("TM_API_KEY") as? String ?: ""
+
 
     defaultConfig {
+        android.buildFeatures.buildConfig = true
         applicationId = "com.example.dec5teamproject"
         minSdk = 24
         targetSdk = 36
@@ -19,12 +34,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        val tmApiKey = project.findProperty("TM_API_KEY") as? String ?: ""
-        buildConfigField(
-            "String",
-            "TM_API_KEY",
-            "\"${project.findProperty("TM_API_KEY") ?: ""}\""
-        )
+        buildConfigField("String", "TM_API_KEY", "\"$tmApiKey\"")
 
     }
 
@@ -68,6 +78,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.room.common.jvm)
+    implementation(libs.androidx.compose.runtime)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

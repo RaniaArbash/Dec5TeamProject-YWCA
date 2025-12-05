@@ -11,6 +11,7 @@ class EventsRepository {
         page: Int = 0
     ): Result<EventsResponse>{
         return try {
+            println("Using API Key: ${BuildConfig.TM_API_KEY}")
             val response = RetrofitInstance.api.getEvents(
                 apiKey = BuildConfig.TM_API_KEY,
             city = city,
@@ -22,12 +23,16 @@ class EventsRepository {
             size = 20
             )
 
-
             if (response.isSuccessful && response.body() != null){
-                Result.success(response.body()!!)
+                val body = response.body()!!
+                val safeBody = body.copy(
+                    embedded = body.embedded ?: EmbeddedEvents(emptyList())
+                )
+                Result.success(safeBody)
             } else {
                 Result.failure(Exception("HTTP ${response.code()} - ${response.message()}"))
             }
+
         } catch (e: Exception){
             Result.failure(e)
         }
