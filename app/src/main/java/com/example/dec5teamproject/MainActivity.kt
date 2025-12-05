@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
             Dec5TeamProjectTheme {
                 Surface(color = MaterialTheme.colorScheme.background) {
                     // Single screen
-                    TouristAttractionsScreen()
+                    FunContentScreen()
                 }
             }
         }
