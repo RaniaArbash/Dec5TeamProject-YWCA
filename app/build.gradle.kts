@@ -11,7 +11,6 @@ android {
     namespace = "com.example.dec5teamproject"
     compileSdk = 36
 
-
     // Load local.properties manually
     val localProperties = Properties()
     val localPropertiesFile = rootProject.file("local.properties")
@@ -20,9 +19,6 @@ android {
     }
 
     val tmApiKey = localProperties.getProperty("TM_API_KEY") ?: ""
-    //: String by project
-        //.findProperty("TM_API_KEY") as? String ?: ""
-
 
     defaultConfig {
         android.buildFeatures.buildConfig = true
