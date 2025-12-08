@@ -1,4 +1,5 @@
 package com.example.dec5teamproject.UILayer
+
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -9,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.dec5teamproject.model.Country
 import com.example.dec5teamproject.viewmodel.CountriesUiState
@@ -17,6 +19,8 @@ import com.example.dec5teamproject.viewmodel.CountriesViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PopularDestinationsScreen(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
     viewModel: CountriesViewModel = viewModel()
 ) {
     val uiState by viewModel.state.collectAsState()
@@ -25,8 +29,8 @@ fun PopularDestinationsScreen(
         topBar = {
             TopAppBar(title = { Text("Popular Destinations") })
         }
-    ) { padding ->
-        Box(Modifier.padding(padding)) {
+    ) { innerPadding ->
+        Box(modifier = modifier.padding(innerPadding)) {
             when (val state = uiState) {
                 is CountriesUiState.Loading -> LoadingState()
                 is CountriesUiState.Error -> ErrorState(
