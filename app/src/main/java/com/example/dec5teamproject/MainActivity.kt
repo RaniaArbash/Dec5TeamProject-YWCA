@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.dec5teamproject.ui.theme.Dec5TeamProjectTheme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.dec5teamproject.ui.theme.Dec5TeamProjectTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,9 +23,8 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navController,
                         startDestination = "events_screen",
-                        modifier = Modifier.padding(innerPadding)
+                        modifier = Modifier.Companion.padding(innerPadding)
                     ) {
-                        // Add your screens here
                         composable("events_screen") {
                             val viewModel: EventsViewModel = viewModel()
                             EventsScreen(viewModel)
