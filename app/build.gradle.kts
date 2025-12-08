@@ -18,7 +18,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
     }
+
 
     buildTypes {
         release {
@@ -39,6 +41,7 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
@@ -60,7 +63,7 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
     // Jetpack Compose integration
-   // implementation("androidx.navigation:navigation-compose:$nav_version")
+    //implementation("androidx.navigation:navigation-compose:$nav_version")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     // Retrofit with Scalar Converter
