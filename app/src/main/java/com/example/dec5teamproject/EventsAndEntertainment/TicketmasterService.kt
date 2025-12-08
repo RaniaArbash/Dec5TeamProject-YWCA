@@ -1,5 +1,6 @@
-package com.example.dec5teamproject
+package com.example.dec5teamproject.EventsAndEntertainment
 
+import com.example.dec5teamproject.EventsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

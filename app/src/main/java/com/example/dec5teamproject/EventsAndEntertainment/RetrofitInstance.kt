@@ -1,5 +1,6 @@
 package com.example.dec5teamproject
 
+import com.example.dec5teamproject.EventsAndEntertainment.TicketmasterService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.OkHttpClient
