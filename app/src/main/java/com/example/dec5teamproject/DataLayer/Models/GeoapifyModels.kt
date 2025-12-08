@@ -1,5 +1,7 @@
 package com.example.dec5teamproject.DataLayer.Models
 
+import com.google.gson.annotations.SerializedName
+
 // ----------------- Geocoding Response -----------------
 data class GeoapifyGeocodeResponse(
     val type: String,
@@ -40,12 +42,9 @@ data class GeoapifyPlaceProperties(
     val name: String?,
     val description: String?,
     val image: String?,
-    val categoriesRaw: String? // Raw categories string from API
+    @SerializedName("categories")
+    val categories: List<String>? // API returns array directly
 )
-
-// Extension property to get categories as a list
-val GeoapifyPlaceProperties.categories: List<String>
-    get() = this.categoriesRaw?.split(",")?.map { it.trim() } ?: emptyList()
 
 // ----------------- Extension properties for convenience -----------------
 val GeoapifyGeometry.lat: Double

@@ -12,6 +12,7 @@ class TouristAttractionRepo {
     // --------------- Get Coordinates for a City ----------------
     suspend fun getCoordinates(city: String): Pair<Double, Double> {
         val response = GeoapifyService.api.geocodeCity(city, apiKey)
+        Log.d("TouristAttractionRepo", "Geocode response: $response")
         val geometry = response.features.firstOrNull()?.geometry
             ?: throw Exception("City not found")
         return Pair(geometry.lat, geometry.lon)
@@ -31,19 +32,28 @@ class TouristAttractionRepo {
     // --------------- Map API Response to TouristAttraction ----------------
     suspend fun loadAttractions(lat: Double, lon: Double): List<TouristAttraction> {
         val response = loadRawAttractions(lat, lon)
-        Log.d("TouristAttractionRepo", "$response" )
-        return response.features.map { feature ->
+        Log.d("TouristAttractionRepo", "Full response: $response")
+        Log.d("TouristAttractionRepo", "Features count: ${response.features.size}")
+
+        return response.features.mapIndexed { index, feature ->
+            Log.d("TouristAttractionRepo", "Feature $index properties: ${feature.properties}")
+            Log.d("TouristAttractionRepo", "Categories: ${feature.properties.categories}")
+
+            val categories = feature.properties.categories ?: emptyList()
+
             val desc = when {
                 !feature.properties.description.isNullOrEmpty() -> feature.properties.description
-                feature.properties.categories.contains("tourism.information") -> "Tourist attraction"
-                feature.properties.categories.contains("tourism.sights") -> "Sightseeing spot"
-                else -> "Tourism information"
+                categories.contains("tourism.information") -> "Tourist information center"
+                categories.contains("tourism.sights") -> "Sightseeing spot"
+                categories.contains("tourism.attraction") -> "Tourist attraction"
+                else -> "Tourism place"
             }
 
             TouristAttraction(
                 name = feature.properties.name ?: "Unknown",
                 description = desc,
-                imageUrl = feature.properties.image
+                imageUrl = feature.properties.image,
+                categories = categories
             )
         }
     }

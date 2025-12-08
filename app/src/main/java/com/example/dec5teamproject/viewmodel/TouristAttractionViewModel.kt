@@ -13,6 +13,7 @@ data class TouristAttraction(
     val description: String,
     val imageUrl: String?,
     val categories: List<String> = emptyList()
+
 )
 
 class TouristAttractionViewModel : ViewModel() {
